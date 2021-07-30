@@ -1,0 +1,63 @@
+{
+  "compilerOptions": {
+    /* compilation */
+    "lib": [
+      "ES2020",
+      "ES2020.BigInt",
+      "ES2020.Promise",
+      "ES2020.String"
+    ],
+    "target": "ES2020",
+    "allowJs": true,
+
+    /* compilation */
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declaration": false,
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+    "removeComments": true,
+    "importHelpers": true,
+
+    /* strict check */
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "alwaysStrict": true,
+    "importsNotUsedAsValues": "preserve",
+    "checkJs": true,
+    "noImplicitAny": true,
+    //    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    //    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    /* types */
+    "types": [
+      "node"
+    ],
+
+    /* module options */
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "paths": {
+      "@lib": [
+        "lib/index.ts"
+      ],
+      "@core": [
+        "core/*"
+      ]
+    }
+  },
+  "exclude": [
+    "./dist",
+    "./node_modules"
+  ],
+  "include": [
+    "./src"
+  ]
+}
