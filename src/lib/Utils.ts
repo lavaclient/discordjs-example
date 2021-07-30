@@ -6,8 +6,13 @@ import type { Command } from "@lib";
 import type { Bot } from "./Bot";
 
 export abstract class Utils {
-    static embed(embed: MessageEmbed | MessageEmbedOptions): MessageOptions {
-        return { embeds: [ embed ] }
+    static PRIMARY_COLOR = 0xfff269;
+
+    static embed(embed: MessageEmbedOptions | string): MessageEmbed {
+        const options: MessageEmbedOptions = typeof embed === "string" ? { description: embed } : embed;
+        options.color ??= Utils.PRIMARY_COLOR;
+
+        return new MessageEmbed(options);
     }
 
     static walk(directory: string): string[] {

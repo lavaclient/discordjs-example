@@ -9,20 +9,15 @@ client.music.on("socketReady", ({ id }) => {
 });
 
 client.music.on("queueFinished", queue => {
-    queue.channel.send(Utils.embed({
-        color: PRIMARY_COLOR,
-        description: "Uh oh, the queue has ended :/"
-    }));
-
-    queue.player.disconnect();
+    const embed = Utils.embed("Uh oh, the queue has ended :/");
+    
+    queue.channel.send({ embeds: [ embed ] });
+    queue.player.manager.destroy(queue.player.guild);
 })
 
 client.music.on("trackStart", (queue, song) => {
-    queue.channel.send(Utils.embed({
-        color: PRIMARY_COLOR,
-        description: `Now playing [**${song.title}**](${song.uri})${song.requester ? ` [<@${song.requester}>]` : ""}`,
-        timestamp: Date.now()
-    }));
+    const embed = Utils.embed(`Now playing [**${song.title}**](${song.uri})${song.requester ? ` [<@${song.requester}>]` : ""}`)
+    queue.channel.send({ embeds: [embed] });
 });
 
 client.on("ready", async () => {
@@ -37,7 +32,7 @@ client.on("ready", async () => {
 client.on("interactionCreate", interaction => {
     if (interaction.isCommand()) {
         const options = Object.assign({}, ...interaction.options.map(i => ({ [i.name]: i.value })));
-        client.commands.get(interaction.commandId)?.exec(interaction, options);
+        client.commands.get(interaction.commandId)?.exec(new CommandContext(interaction), options);
     }
 });
 
