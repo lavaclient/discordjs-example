@@ -27,9 +27,9 @@ export abstract class Utils {
         return read(directory);
     }
 
-    static async syncCommands(client: Bot) {
+    static async syncCommands(client: Bot, dir: string) {
         const commands: Command[] = [];
-        for (const path of Utils.walk(__dirname + "/commands")) {
+        for (const path of Utils.walk(dir)) {
             const { default: Command } = await import(path);
             if (!Command) {
                 continue;

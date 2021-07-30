@@ -27,7 +27,7 @@ client.music.on("trackStart", (queue, song) => {
 
 client.on("ready", async () => {
     if (!process.argv.includes("--no-sync")) {
-        await Utils.syncCommands(client);
+        await Utils.syncCommands(client, __dirname + "/commands");
     }
 
     client.music.init(client.user!.id); // Client#user shouldn't be null on ready
