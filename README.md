@@ -14,5 +14,5 @@ This is an example of lavaclient using discord.js v13
     - 3. Create an [application.yml](https://github.com/freyacodes/lavalink/blob/master/LavalinkServer/application.yml.example) in the same folder as the Lavalink.jar
     - 4. Start lavalink using: `java -jar Lavalink.jar`
 - 6. Rename `.env.example` to `.env` and replace `BOT_TOKEN` to the token from step 2
-- 7. Run `yarn start`
+- 7. Run `yarn start` in prod or when you're updating, deleting, or creating new commands, otherwise use `yarn dev`
 
