@@ -24,11 +24,11 @@ export default class Play extends Command {
 
         /* check if a player already exists, if so check if the invoker is in our vc. */
         let player = ctx.client.music.players.get(ctx.guild!.id);
-        if (player && player.channel !== vc.id) {
-            return ctx.reply(Utils.embed(`Join <#${player.channel}> bozo`), { ephemeral: true });
+        if (player && player.channelId !== vc.id) {
+            return ctx.reply(Utils.embed(`Join <#${player.channelId}> bozo`), { ephemeral: true });
         }
 
-        const results = await ctx.client.music.search(/^https?:\/\//.test(query)
+        const results = await ctx.client.music.rest.loadTracks(/^https?:\/\//.test(query)
             ? query
             : `ytsearch:${query}`);
 
@@ -51,17 +51,18 @@ export default class Play extends Command {
 
         /* create and/or join the member's vc. */
         if (!player?.connected) {
-            player ??= ctx.client.music.create(ctx.guild!.id);
+            player ??= ctx.client.music.createPlayer(ctx.guild!.id);
             player.queue.channel = ctx.channel as MessageChannel;
-            await player.connect(vc.id, { selfDeaf: true });
+            await player.connect(vc.id, { deafened: true });
         }
 
         /* reply with the queued message. */
-        await ctx.reply(Utils.embed(msg), { ephemeral: !player.queue.started });
+        const started = player.playing || player.paused;
+        await ctx.reply(Utils.embed(msg), { ephemeral: !started });
 
         /* do queue tings. */
         player.queue.add(tracks, ctx.user.id);
-        if (!player.queue.started) {
+        if (!started) {
             await player.queue.start()
         }
     }

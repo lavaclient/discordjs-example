@@ -11,13 +11,13 @@ export default class Leave extends Command {
 
         /* check if the user is in the player's voice channel. */
         const vc = ctx.guild?.voiceStates?.cache?.get(ctx.user.id)?.channel;
-        if (!vc || player.channel !== vc.id) {
+        if (!vc || player.channelId !== vc.id) {
             return ctx.reply(Utils.embed("You're not in my voice channel, bozo."), { ephemeral: true });
         }
 
-        await ctx.reply(Utils.embed(`Left <#${player.channel}>`));
+        await ctx.reply(Utils.embed(`Left <#${player.channelId}>`));
 
         /* leave the player's voice channel. */
-        ctx.client.music.destroy(player.guild);
+        ctx.client.music.destroyPlayer(player.guildId);
     }
 }

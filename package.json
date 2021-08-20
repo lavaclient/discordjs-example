@@ -17,16 +17,19 @@
     "start": "yarn dev --force-sync"
   },
   "dependencies": {
-    "@lavaclient/queue": "^1.1.0",
+    "@lavaclient/queue": "^2.0.0-rc.1",
     "discord.js": "discordjs/discord.js",
     "dotenv": "^10.0.0",
-    "lavaclient": "^3.3.0",
+    "lavaclient": "^4.0.0-rc.13",
     "module-alias": "^2.2.2"
   },
   "devDependencies": {
-    "@types/node": "^16.4.7",
+    "@types/node": "^16.6.1",
     "rimraf": "^3.0.2",
-    "type-fest": "^1.2.3",
+    "type-fest": "^2.0.0",
     "typescript": "^4.3.5"
+  },
+  "engines": {
+    "node": ">=16.6.x"
   }
 }
