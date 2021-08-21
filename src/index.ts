@@ -12,6 +12,7 @@ client.music.on("queueFinish", queue => {
     const embed = Utils.embed("Uh oh, the queue has ended :/");
 
     queue.channel.send({ embeds: [ embed ] });
+    queue.player.disconnect()
     queue.player.node.destroyPlayer(queue.player.guildId);
 })
 

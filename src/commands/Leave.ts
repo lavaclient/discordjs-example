@@ -18,6 +18,7 @@ export default class Leave extends Command {
         await ctx.reply(Utils.embed(`Left <#${player.channelId}>`));
 
         /* leave the player's voice channel. */
+        player.disconnect();
         ctx.client.music.destroyPlayer(player.guildId);
     }
 }
