@@ -1,10 +1,13 @@
-import { command, Command, CommandContext, Utils } from "@lib";
+import { Command, Utils } from "../lib";
 
-@command({ name: "leave", description: "Leaves the VC that the bot is currently in." })
 export default class Leave extends Command {
-    async exec(ctx: CommandContext) {
+    constructor() {
+        super({ name: "leave", description: "Leaves the VC that the bot is currently in." });
+    }
+
+    async exec(ctx) {
         /* check if a player exists for this guild. */
-        const player = ctx.client.music.players.get(ctx.guild!.id);
+        const player = ctx.client.music.players.get(ctx.guild.id);
         if (!player?.connected) {
             return ctx.reply(Utils.embed("I couldn't find a player for this guild."), { ephemeral: true });
         }
