@@ -16,7 +16,7 @@ export default class Join extends Command {
         }
 
         /* check if a player already exists for this guild. */
-        const player = ctx.client.music.create(vc.guild.id);
+        const player = ctx.client.music.createPlayer(vc.guild.id);
         if (player.connected) {
             return ctx.reply(Utils.embed("I'm already connected to a vc."), { ephemeral: true });
         }

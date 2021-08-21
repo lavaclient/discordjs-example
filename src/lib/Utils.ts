@@ -4,6 +4,9 @@ import { join } from "path";
 
 import type { Command } from "@lib";
 import type { Bot } from "./Bot";
+import type { NewsChannel, TextChannel, ThreadChannel } from "discord.js";
+
+export type MessageChannel = TextChannel | ThreadChannel | NewsChannel;
 
 export abstract class Utils {
     static PRIMARY_COLOR = 0xfff269;
@@ -65,7 +68,7 @@ export abstract class Utils {
         /* get the slash commands to add, update, or remove. */
         const adding = commands.filter(c => existing.every(e => e.name !== c.data.name))
             , updating = commands.filter(c => existing.some(e => e.name === c.data.name))
-            , removing = existing.filter(e => commands.every(c => c.data.name !== e.name)).array();
+            , removing = [ ...existing.filter(e => commands.every(c => c.data.name !== e.name)).values() ];
 
         console.log(`[discord] slash commands: removing ${removing.length}, adding ${adding.length}, updating ${updating.length}`)
 

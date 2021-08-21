@@ -1,7 +1,8 @@
 import { Guild, Message, MessageEmbed } from "discord.js";
 import type { Client, CommandInteraction, InteractionReplyOptions, User } from "discord.js";
 import type { APIMessage } from "discord-api-types";
-import type { MessageChannel } from "../Queue";
+import { Player } from "lavaclient";
+import type { MessageChannel } from "../index";
 
 export class CommandContext {
     readonly interaction: CommandInteraction;
@@ -12,6 +13,10 @@ export class CommandContext {
 
     get client(): Client {
         return this.interaction.client;
+    }
+
+    get player(): Player | null {
+        return (this.guild && this.client.music.players.get(this.guild.id)) ?? null;
     }
 
     get guild(): Guild | null {
