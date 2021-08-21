@@ -1,6 +1,6 @@
 import "dotenv/config";
 import "module-alias/register";
-import { Utils, Bot, CommandContext } from "@lib";
+import { Utils, Bot, CommandContext } from "./lib";
 
 const client = new Bot()
 
@@ -23,7 +23,7 @@ client.music.on("trackStart", (queue, song) => {
 
 client.on("ready", async () => {
     await Utils.syncCommands(client, __dirname + "/commands", !process.argv.includes("--force-sync"));
-    client.music.connect(client.user!.id); // Client#user shouldn't be null on ready
+    client.music.connect(client.user.id); // Client#user shouldn't be null on ready
     console.log("[discord] ready!");
 });
 

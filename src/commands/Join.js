@@ -1,14 +1,11 @@
-import {
-    command,
-    Command,
-    CommandContext,
-    MessageChannel,
-    Utils,
-} from "@lib";
+import { Command, Utils } from "../lib";
 
-@command({ name: "join", description: "Joins the member's voice channel." })
 export default class Join extends Command {
-    async exec(ctx: CommandContext) {
+    constructor() {
+        super({ name: "join", description: "Joins the member's voice channel." });
+    }
+
+    async exec(ctx) {
         /* check if the invoker is in a voice channel. */
         const vc = ctx.guild?.voiceStates?.cache?.get(ctx.user.id)?.channel;
         if (!vc) {
@@ -22,7 +19,7 @@ export default class Join extends Command {
         }
 
         /* set the queue channel. */
-        player.queue.channel = ctx.channel as MessageChannel;
+        player.queue.channel = ctx.channel;
 
         /* connect to the vc. */
         await player.connect(vc.id);

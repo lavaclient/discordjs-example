@@ -1,21 +1,22 @@
-import { command, Command, CommandContext, MessageChannel, Utils } from "@lib";
+import { Command, Utils } from "../lib";
 
-import type { Addable } from "@lavaclient/queue";
-
-@command({
-    name: "play",
-    description: "Plays a song in the current vc.",
-    options: [
-        {
-            name: "query",
-            description: "The search query.",
-            type: "STRING",
-            required: true
-        }
-    ]
-})
 export default class Play extends Command {
-    async exec(ctx: CommandContext, { query }: { query: string }) {
+    constructor() {
+        super({
+            name: "play",
+            description: "Plays a song in the current vc.",
+            options: [
+                {
+                    name: "query",
+                    description: "The search query.",
+                    type: "STRING",
+                    required: true
+                }
+            ]
+        });
+    }
+
+    async exec(ctx, { query }) {
         /* check if the invoker is in a vc. */
         const vc = ctx.guild?.voiceStates?.cache?.get(ctx.user.id)?.channel
         if (!vc) {
@@ -23,7 +24,7 @@ export default class Play extends Command {
         }
 
         /* check if a player already exists, if so check if the invoker is in our vc. */
-        let player = ctx.client.music.players.get(ctx.guild!.id);
+        let player = ctx.client.music.players.get(ctx.guild.id);
         if (player && player.channelId !== vc.id) {
             return ctx.reply(Utils.embed(`Join <#${player.channelId}> bozo`), { ephemeral: true });
         }
@@ -32,7 +33,7 @@ export default class Play extends Command {
             ? query
             : `ytsearch:${query}`);
 
-        let tracks: Addable[] = [], msg: string = "";
+        let tracks = [], msg = "";
         switch (results.loadType) {
             case "LOAD_FAILED":
             case "NO_MATCHES":
@@ -51,8 +52,8 @@ export default class Play extends Command {
 
         /* create and/or join the member's vc. */
         if (!player?.connected) {
-            player ??= ctx.client.music.createPlayer(ctx.guild!.id);
-            player.queue.channel = ctx.channel as MessageChannel;
+            player ??= ctx.client.music.createPlayer(ctx.guild.id);
+            player.queue.channel = ctx.channel;
             await player.connect(vc.id, { deafened: true });
         }
 

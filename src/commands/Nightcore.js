@@ -1,8 +1,11 @@
-import { command, Command, CommandContext, Utils } from "@lib";
+import { Command, Utils } from "../lib";
 
-@command({ name: "nightcore", description: "Enabled the nightcore filter in this guild." })
 export default class Nightcore extends Command {
-    async exec(ctx: CommandContext) {
+    constructor() {
+        super({ name: "nightcore", description: "Enabled the nightcore filter in this guild." });
+    }
+
+    async exec(ctx) {
         /* check if there is a player for this guild. */
         const player = ctx.player
         if (!player?.connected) {
