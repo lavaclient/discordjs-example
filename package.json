@@ -17,10 +17,10 @@
     "start": "yarn dev --force-sync"
   },
   "dependencies": {
-    "@lavaclient/queue": "^2.0.0-rc.1",
+    "@lavaclient/queue": "^2.0.1",
     "discord.js": "discordjs/discord.js",
     "dotenv": "^10.0.0",
-    "lavaclient": "^4.0.0-rc.13",
+    "lavaclient": "^4.0.2",
     "module-alias": "^2.2.2"
   },
   "devDependencies": {
