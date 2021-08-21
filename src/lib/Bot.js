@@ -1,7 +1,5 @@
-import { Client, Collection, Snowflake } from "discord.js";
+import { Client, Collection } from "discord.js";
 import { Node } from "lavaclient";
-
-import { Command } from "./command/Command";
 
 export class Bot extends Client {
     constructor() {
@@ -9,7 +7,6 @@ export class Bot extends Client {
             intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"]
         });
 
-        /** @type {Collection<Snowflake, Command>} */
         this.commands = new Collection()
 
         this.music = new Node({
