@@ -1,6 +1,6 @@
 import "dotenv/config";
 import "module-alias/register";
-import { Utils, Bot, CommandContext } from "./lib";
+import { Utils, Bot, CommandContext } from "@lib";
 
 const client = new Bot()
 
