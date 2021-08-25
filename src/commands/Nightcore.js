@@ -1,4 +1,4 @@
-import { Command, Utils } from "../lib";
+import { Command, Utils } from "@lib";
 
 export default class Nightcore extends Command {
     constructor() {
