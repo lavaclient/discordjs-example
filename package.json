@@ -16,16 +16,15 @@
     "start": "yarn dev --force-sync"
   },
   "dependencies": {
-    "@lavaclient/queue": "^2.0.1",
+    "@lavaclient/queue": "^2.0.2",
     "discord.js": "discordjs/discord.js",
     "dotenv": "^10.0.0",
-    "lavaclient": "^4.0.2",
+    "lavaclient": "^4.0.3",
     "module-alias": "^2.2.2"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.49",
-    "@swc/core": "^1.2.80",
-    "@types/node": "^16.6.1",
+    "@swc/core": "^1.2.84",
     "rimraf": "^3.0.2"
   },
   "engines": {
