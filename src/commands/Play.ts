@@ -12,11 +12,17 @@ import type { Addable } from "@lavaclient/queue";
             description: "The search query.",
             type: "STRING",
             required: true
+        },
+        {
+            name: "next",
+            description: "Whether to add the results to the top of the queue.",
+            type: "BOOLEAN",
+            required: false
         }
     ]
 })
 export default class Play extends Command {
-    async exec(ctx: CommandContext, { query }: { query: string }) {
+    async exec(ctx: CommandContext, { query, next }: { query: string, next: boolean }) {
         /* check if the invoker is in a vc. */
         const vc = ctx.guild?.voiceStates?.cache?.get(ctx.user.id)?.channel
         if (!vc) {
@@ -72,7 +78,7 @@ export default class Play extends Command {
             }
         }
 
-        /* create and/or join the member's vc. */
+        /* create a player and/or join the member's vc. */
         if (!player?.connected) {
             player ??= ctx.client.music.createPlayer(ctx.guild!.id);
             player.queue.channel = ctx.channel as MessageChannel;
@@ -81,10 +87,13 @@ export default class Play extends Command {
 
         /* reply with the queued message. */
         const started = player.playing || player.paused;
-        await ctx.reply(Utils.embed(msg), { ephemeral: !started });
+        await ctx.reply(Utils.embed({
+            description: msg,
+            footer: next ? { text: "Added to the top of the queue." } : undefined
+        }), { ephemeral: !started });
 
         /* do queue tings. */
-        player.queue.add(tracks, ctx.user.id);
+        player.queue.add(tracks, { requester: ctx.user.id, next });
         if (!started) {
             await player.queue.start()
         }
