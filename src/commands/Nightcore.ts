@@ -11,7 +11,7 @@ export default class Nightcore extends Command {
 
         /* toggle the nightcore filter. */
         player.filters.timescale = (player.nightcore = !player.nightcore)
-            ? { speed: 1.1, pitch: 1.1, rate: 1 }
+            ? { speed: 1.125, pitch: 1.125, rate: 1 }
             : undefined;
 
         await player.setFilters();

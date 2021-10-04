@@ -21,7 +21,7 @@ export default class Join extends Command {
             return ctx.reply(Utils.embed("I'm already connected to a vc."), { ephemeral: true });
         }
 
-        /* set the queue channel. */
+        /* set the queue channel so that we can send track start embeds. */
         player.queue.channel = ctx.channel as MessageChannel;
 
         /* connect to the vc. */
