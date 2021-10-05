@@ -1,4 +1,5 @@
 import { Command, Utils } from "@lib";
+import { SpotifyItemType } from "@lavaclient/spotify";
 
 export default class Play extends Command {
     constructor() {
@@ -35,25 +36,47 @@ export default class Play extends Command {
             return ctx.reply(Utils.embed(`Join <#${player.channelId}> bozo`), { ephemeral: true });
         }
 
-        const results = await ctx.client.music.rest.loadTracks(/^https?:\/\//.test(query)
-            ? query
-            : `ytsearch:${query}`);
-
         let tracks = [], msg = "";
-        switch (results.loadType) {
-            case "LOAD_FAILED":
-            case "NO_MATCHES":
-                return ctx.reply({ content: "uh oh something went wrong", ephemeral: true });
-            case "PLAYLIST_LOADED":
-                tracks = results.tracks;
-                msg = `Queued playlist [**${results.playlistInfo.name}**](${query}), it has a total of **${tracks.length}** tracks.`;
-                break
-            case "TRACK_LOADED":
-            case "SEARCH_RESULT":
-                const [track] = results.tracks;
-                tracks = [track];
-                msg = `Queued [**${track.info.title}**](${track.info.uri})`;
-                break;
+        if (ctx.client.music.spotify.isSpotifyUrl(query)) {
+            const item = await ctx.client.music.spotify.load(query);
+            switch (item?.type) {
+                case SpotifyItemType.Track:
+                    const track = await item.resolveYoutubeTrack();
+                    tracks = [ track ];
+                    msg = `Queued track [**${item.name}**](${query}).`;
+                    break;
+                case SpotifyItemType.Artist:
+                    tracks = await item.resolveYoutubeTracks();
+                    msg = `Queued the **Top ${tracks.length} tracks** for [**${item.name}**](${query}).`;
+                    break;
+                case SpotifyItemType.Album:
+                case SpotifyItemType.Playlist:
+                    tracks = await item.resolveYoutubeTracks();
+                    msg = `Queued **${tracks.length} tracks** from ${SpotifyItemType[item.type].toLowerCase()} [**${item.name}**](${query}).`;
+                    break;
+                default:
+                    return ctx.reply({ content: "Sorry, couldn't find anything :/", ephemeral: true });
+            }
+        } else {
+            const results = await ctx.client.music.rest.loadTracks(/^https?:\/\//.test(query)
+                ? query
+                : `ytsearch:${query}`);
+
+            switch (results.loadType) {
+                case "LOAD_FAILED":
+                case "NO_MATCHES":
+                    return ctx.reply({ content: "uh oh something went wrong", ephemeral: true });
+                case "PLAYLIST_LOADED":
+                    tracks = results.tracks;
+                    msg = `Queued playlist [**${results.playlistInfo.name}**](${query}), it has a total of **${tracks.length}** tracks.`;
+                    break
+                case "TRACK_LOADED":
+                case "SEARCH_RESULT":
+                    const [track] = results.tracks;
+                    tracks = [track];
+                    msg = `Queued [**${track.info.title}**](${track.info.uri})`;
+                    break;
+            }
         }
 
         /* create a player and/or join the member's vc. */
