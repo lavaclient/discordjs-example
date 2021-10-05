@@ -1,7 +1,16 @@
 import "dotenv/config";
 import "module-alias/register";
+import { load } from "@lavaclient/spotify";
 import { Utils, Bot, CommandContext } from "@lib";
 import { join } from "path";
+
+load({
+    client: {
+        id: process.env.SPOTIFY_CLIENT_ID,
+        secret: process.env.SPOTIFY_CLIENT_SECRET,
+    },
+    autoResolveYoutubeTracks: true
+});
 
 const client = new Bot()
 
