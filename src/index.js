@@ -11,6 +11,7 @@ load({
     },
     autoResolveYoutubeTracks: true
 });
+=======
 
 const client = new Bot()
 
