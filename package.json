@@ -1,33 +1,33 @@
 {
-  "name": "@lavaclient/tests",
-  "version": "0.0.0",
-  "description": "Testing bot for lavaclient",
-  "main": "dist/index.js",
-  "repository": "https://github.com/lavaclient/test-bot",
-  "author": "melike2d",
-  "license": "GPL-3.0-only",
-  "private": false,
-  "_moduleAliases": {
-    "@lib": "dist/lib"
-  },
-  "scripts": {
-    "build": "rimraf dist && swc src -d dist",
-    "dev": "yarn build && node .",
-    "start": "yarn dev --force-sync"
-  },
-  "dependencies": {
-    "@lavaclient/queue": "^2.0.2",
-    "discord.js": "discordjs/discord.js",
-    "dotenv": "^10.0.0",
-    "lavaclient": "^4.0.3",
-    "module-alias": "^2.2.2"
-  },
-  "devDependencies": {
-    "@swc/cli": "^0.1.49",
-    "@swc/core": "^1.2.84",
-    "rimraf": "^3.0.2"
-  },
-  "engines": {
-    "node": ">=16.6.x"
-  }
+    "name": "@lavaclient/discord.js",
+    "version": "0.0.0",
+    "description": "Discord.js example bot",
+    "main": "dist/index.js",
+    "repository": "https://github.com/lavaclient/discord-v13-example",
+    "author": "melike2d",
+    "license": "GPL-3.0-only",
+    "private": false,
+    "_moduleAliases": {
+        "@lib": "dist/lib"
+    },
+    "scripts": {
+        "build": "rimraf dist && swc src -d dist",
+        "dev": "yarn build && node .",
+        "start": "yarn dev --force-sync"
+    },
+    "dependencies": {
+        "@lavaclient/queue": "^2.0.5",
+        "discord.js": "discordjs/discord.js",
+        "dotenv": "^10.0.0",
+        "lavaclient": "^4.0.4",
+        "module-alias": "^2.2.2"
+    },
+    "devDependencies": {
+        "@swc/cli": "^0.1.51",
+        "@swc/core": "^1.2.93",
+        "rimraf": "^3.0.2"
+    },
+    "engines": {
+        "node": ">=16.6.x"
+    }
 }
