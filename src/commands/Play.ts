@@ -31,7 +31,7 @@ export default class Play extends Command {
 
         /* check if a player already exists, if so check if the invoker is in our vc. */
         let player = ctx.client.music.players.get(ctx.guild!.id);
-        if (player && player.channelId !== vc.id) {
+        if (player && player.channelId && player.channelId !== vc.id) {
             return ctx.reply(Utils.embed(`Join <#${player.channelId}> bozo`), { ephemeral: true });
         }
 
